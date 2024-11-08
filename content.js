@@ -1,22 +1,26 @@
   
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-    if (request.action === "sendText") {
-        f();
+    if (request.action === "checkSpelling") {
+        checkSpelling();
     }
   });
 
 
-async function f() {
+async function checkSpelling() {
     async function sendText() {
+        
         if(!window.confirm(`Да ли желите да пошаљете текст ChatGPT-ju?`)) return;
         try {
             const response = await fetch('http://localhost:3000/chatGPT', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json' // Set headers for JSON data
+                    'Content-Type': 'application/json'
                   },
-                body: JSON.stringify({text: document.getElementById('content').innerText})       
-
+                body: JSON.stringify({
+                    text: document.getElementById('content').innerText,
+                    prompt: 'детаљно прегледај текст на српском, пронађи граматичке грешке. Стави те речи под наводнике и у низ [] и одговори ми само у том низу. Ако нема грешака, врати празан низ []. Ево текста: ',
+                    description: 'Ви сте асистент за проверу граматике са знањем српског језика. Пажљиво анализирајте дати текст да ли постоје граматичке, правописне или стилске грешке'
+                })
             });
             const responseBody = await response.json();
             return responseBody
@@ -45,9 +49,7 @@ async function f() {
         document.head.appendChild(style);
     }
     
-    // Usage example: Call the function with your desired keyword
-// Replace "example" with your desired keyword
- // Replace "example" with your desired keyword
+
     let answer = await sendText();
     answer = JSON.parse(answer);
     
