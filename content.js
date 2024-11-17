@@ -2,9 +2,11 @@
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.action === "checkSpelling") {
         checkSpelling();
-    }if (request.action === "checkFacts") {
+    }
+    if (request.action === "checkFacts") {
         checkFacts();
     }
+   
   });
 
 
@@ -143,3 +145,4 @@ async function checkFacts() {
     });
 
 }
+

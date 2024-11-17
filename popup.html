@@ -9,9 +9,22 @@
 </head>
 <body>
     <div class = "container">
-        <h1 class = "title">Ekstenzija</h1>
-        <button class = "btn spelling">Пронађи словне грешке</button>
-        <button class = "btn facts">Пронађи материјалне грешке</button>
+        <div class="navigation">
+            <div class="tab tabSpelling active"><div class="tabText">Словне грешке</div></div>
+            <div class="tab tabFacts"><div class="tabText">Чињеничне грешке</div></div>
+            <div class="tab tabArticle"><div class="tabText">Среди текст</div></div>
+        </div>
+        <div class="operation spelling active">
+            <button class = "btn btnSpelling">Пронађи словне грешке</button>
+        </div>
+        <div class="operation facts">
+            <button class = "btn btnFacts">Пронађи материјалне грешке</button>
+        </div>
+        <div class="operation article">
+            <button class = "btn btnArticleStrip">Очисти текст</button>
+            <button class = "btn btnArticleSend">Пошаљи текст</button>
+            <textarea class="textArticle"></textarea>
+        </div>
     </div>
     <script src = "./popup.js"></script>
 </body>
