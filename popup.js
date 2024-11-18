@@ -74,18 +74,18 @@ async function arrangeArticle(textArticle) {
         
         if(!window.confirm(`Да ли желите да пошаљете текст ChatGPT-ju?`)) return;
         try {
-            const response = await fetch(/* 'http://localhost:3000/chatGPT'  */'https://grammar-backend.onrender.com/chatGPT', {
+            const response = await fetch('http://localhost:3000/chatGPT/article' /* 'https://grammar-backend.onrender.com/chatGPT/article' */, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                   },
                 body: JSON.stringify({
                     text: textArticle.value,
-                    prompt: "Среди овај новински текст на српском. Немој да уклониш регуларан текст, само исправи шта је потребно. Уклони сувишне размаке између речи, исправи словне грешке, али немој да изоставиш ниједан део регуларног текста. Имена и презимена треба само да почињу великим словом. Текст треба да буде на ћирилици. Измисли пет занимљивих наслова на основу текста. Одговор стави у низ []. Први члан низа треба да буде сређен чланак под наводницима, а наредних пет чланова низа пет предложених наслова, под наводницима. Структура одговора треба да буде оваква: ['Сређен текст', 'Први наслов', 'Други наслов', 'Трећи наслов', 'Четврти наслов', 'Пети наслов']. Ево текста: ",
+                    prompt: "Среди овај новински текст на српском, у стилу чланака на сајту Радио-телевизије Србије. Немој да уклониш регуларан текст, само исправи шта је потребно. Уклони сувишне размаке између речи, направи пасусе, исправи словне грешке, али немој да изоставиш ниједан део регуларног текста. Имена и презимена треба само да почињу великим словом. Текст треба да буде на ћирилици. Измисли пет занимљивих наслова на основу текста. Ево текста: ",
                     description: 'Ви сте асистент за сређивање новинских текстова на српском језику за сајт Радио-телевизије Србије'
                 })
             });
-            const responseBody = await response.json();
+            const responseBody = await response.text();
             return responseBody
         } catch (error) {
             alert(error.message);
@@ -99,9 +99,9 @@ async function arrangeArticle(textArticle) {
     
     
     if((!answer) || (answer == []) || (answer == '')) {
-        alert('ChatGPT није пронашао грешке');
+        alert('ChatGPT није средио текст');
         return
     };
-    textArticle.value = answer[0] + '\n\n' + answer[1] +'\n\n' + answer[2] +'\n\n' + answer[3] +'\n\n' + answer[4] +'\n\n' + answer[5] + '\n\n';
+    textArticle.value = answer;
 }
 

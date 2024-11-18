@@ -15,7 +15,7 @@ async function checkSpelling() {
         
         if(!window.confirm(`Да ли желите да пошаљете текст ChatGPT-ju?`)) return;
         try {
-            const response = await fetch(/* 'http://localhost:3000/chatGPT'  */'https://grammar-backend.onrender.com/chatGPT', {
+            const response = await fetch(/* 'http://localhost:3000/chatGPT/spelling'  */'https://grammar-backend.onrender.com/chatGPT/spelling', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -91,7 +91,7 @@ async function checkFacts() {
         
         if(!window.confirm(`Да ли желите да пошаљете текст ChatGPT-ju?`)) return;
         try {
-            const response = await fetch(/* 'http://localhost:3000/chatGPT'  */'https://grammar-backend.onrender.com/chatGPT', {
+            const response = await fetch(/* 'http://localhost:3000/chatGPT/facts'  */'https://grammar-backend.onrender.com/chatGPT/facts', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
