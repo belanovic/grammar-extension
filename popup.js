@@ -74,7 +74,7 @@ async function arrangeArticle(textArticle) {
         
         if(!window.confirm(`Да ли желите да пошаљете текст ChatGPT-ju?`)) return;
         try {
-            const response = await fetch('http://localhost:3000/chatGPT/article' /* 'https://grammar-backend.onrender.com/chatGPT/article' */, {
+            const response = await fetch(/* 'http://localhost:3000/chatGPT/article'  */'https://grammar-backend.onrender.com/chatGPT/article', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
