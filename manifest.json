@@ -3,7 +3,7 @@
     "name": "Text Selector",
     "version": "1.0",
     "description": "Select specific text on a webpage.",
-    "permissions": ["activeTab", "scripting"],
+    "permissions": ["activeTab", "scripting", "storage"],
     "host_permissions": ["http://*/*", "https://*/*"],
     "background": {
       "service_worker": "background.js"
