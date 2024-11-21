@@ -38,14 +38,17 @@ document.addEventListener("DOMContentLoaded", function() {
     const btnFacts = document.getElementsByClassName('facts')[0];
     const btnArticleSend = document.getElementsByClassName('btnArticleSend')[0];
     const textArticle = document.getElementsByClassName('textArticle')[0];
+    const textOverlay = document.getElementsByClassName('textOverlay')[0];
 
     chrome.storage.local.get('textArticle', (result) => textArticle.value = result.textArticle);
     
+    /* setOverlay(textOverlay, 'show'); */
 
     const btnArticleStrip = document.getElementsByClassName('btnArticleStrip')[0];
 
     btnArticleStrip.addEventListener('click', () => {
         textArticle.value = removeLargeHexadecimalParts(textArticle.value);
+        chrome.storage.local.set({textArticle: textArticle.value});
         function removeLargeHexadecimalParts(text) {
             let strippedText = text.replace(/[a-f0-9\s]{20}/gi, 'a');
             strippedText = strippedText.replace(/(a)\1+/g, '\n\n'); 
@@ -69,15 +72,31 @@ document.addEventListener("DOMContentLoaded", function() {
     })
     btnArticleSend.addEventListener('click', function() {
         if(!window.confirm(`Да ли желите да пошаљете текст ChatGPT-ju?`)) return;
+        setOverlay(textOverlay, 'show');
         chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
             chrome.runtime.sendMessage({ action: "arrangeArticle", tabId: tabs[0].id });
         });
     })
     chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+        setOverlay(textOverlay, 'hide');
         if (message.type === 'textArranged') {
             chrome.storage.local.get('textArticle', (result) => textArticle.value = result.textArticle);
           }
-        sendResponse({ status: 'Message received by popup' });
+       
     })
 
 }) 
+
+
+function setOverlay(overlay, option) {
+    if(option == 'show') {
+        overlay.style.display = 'flex';
+        overlay.style.transition = "all 0.5s";
+        overlay.style.background = 'rgba(0, 0, 0, 1)';
+    }
+    if(option == 'hide') {
+        overlay.style.transition = "all 0.5s";
+        overlay.style.background = 'rgba(0, 0, 0, 0)';
+        overlay.style.display = 'none';
+    }
+}

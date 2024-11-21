@@ -57,12 +57,6 @@ async function arrangeArticle(textArticle, x) {
   }
   chrome.storage.local.set({textArticle: answer});
   console.log(answer)
-  chrome.runtime.sendMessage({ type: 'textArranged', payload: 'Hello from the background!' }, (response) => {
-    if (chrome.runtime.lastError) {
-      console.error('Error:', chrome.runtime.lastError.message);
-    } else {
-      console.log('Response from popup:', response);
-    }
-  });
+  chrome.runtime.sendMessage({ type: 'textArranged'});
   return answer;
 }
