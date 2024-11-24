@@ -11,9 +11,10 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
 
 async function checkSpelling() {
+    if(!window.confirm(`Да ли желите да пошаљете текст ChatGPT-ju?`)) return;
     async function sendText() {
         
-        if(!window.confirm(`Да ли желите да пошаљете текст ChatGPT-ju?`)) return;
+        
         try {
             const response = await fetch(/* 'http://localhost:3000/chatGPT/spelling'  */'https://grammar-backend.onrender.com/chatGPT/spelling', {
                 method: 'POST',
@@ -87,9 +88,10 @@ async function checkSpelling() {
 
 
 async function checkFacts() {
+    if(!window.confirm(`Да ли желите да пошаљете текст ChatGPT-ju?`)) return;
     async function sendText() {
         
-        if(!window.confirm(`Да ли желите да пошаљете текст ChatGPT-ju?`)) return;
+        
         try {
             const response = await fetch('http://localhost:3000/chatGPT/facts'/*  'https://grammar-backend.onrender.com/chatGPT/facts' */, {
                 method: 'POST',
@@ -113,7 +115,7 @@ async function checkFacts() {
         const correction = obj.correction;
         const bodyText = document.body.innerHTML;
         const regex = new RegExp(`(${obj.phrase})`, "gi"); // Case-insensitive search for keyword
-        const highlightedText = bodyText.replace(regex, `<span class = "answer"><span class="highlight">$1</span><span class = "correction">${correction}</span></span>`);
+        const highlightedText = bodyText.replace(regex, `<span class = "answer"><span class="highlight">$1</span><span class = "correction" style = "min-width: ${correction.split(' ').length > 1? '250px' : ''};}">${correction}</span></span>`);
     
         document.body.innerHTML = highlightedText;
     
@@ -132,17 +134,22 @@ async function checkFacts() {
         }
         .correction {
             display: none;
-            background-color: lightgreen;
+            background-color: rgb(101, 255, 59);
             color: black;
             position: absolute;
-            width: 200px;
+            
+            padding: 5px 10px 5px 10px;
             z-index: 1;
+            font-size: 1rem;
+            border-radius: 0% 10% 0% 10%;
+            
         }
         .answer:hover .correction {
             display: inline;
         }
         .correction:active .correction {
             display: inline;
+    
         }
         `;
         document.head.appendChild(style);
@@ -159,6 +166,7 @@ async function checkFacts() {
         return
     };
     alert('ChatGPT је пронашао следеће грешке: ' + answer);
+    
     answer.forEach((elem, i) => {
         highlightTextByKeyword(elem)
     });

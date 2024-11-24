@@ -11,18 +11,22 @@
     <div class = "container">
         <div class="navigation">
             <div class="tab tabSpelling active"><div class="tabText">Словне грешке</div></div>
-            <div class="tab tabFacts"><div class="tabText">Чињеничне грешке</div></div>
-            <div class="tab tabArticle"><div class="tabText">Среди текст</div></div>
+            <div class="tab tabFacts"><div class="tabText">Стилске исправке</div></div>
+            <div class="tab tabArticle"><div class="tabText">Среди прилог</div></div>
+            <div class="tab tabArticle"><div class="tabText">Коментари</div></div>
         </div>
         <div class="operation spelling active">
             <button class = "btn btnSpelling">Пронађи словне грешке</button>
         </div>
         <div class="operation facts">
-            <button class = "btn btnFacts">Пронађи материјалне грешке</button>
+            <button class = "btn btnFacts">Пронађи стилске исправке</button>
         </div>
         <div class="operation article">
-            <button class = "btn btnArticleStrip">Очисти текст</button>
-            <button class = "btn btnArticleSend">Пошаљи текст</button>
+            <div class="btnContainer">
+                <button class = "btn btnArticleStrip">Очисти текст</button>
+                <button class = "btn btnArticleSend">Пошаљи текст</button>
+            </div>
+            
             <div class="textContainer">
                 <div class="textOverlay">
                     <div class="loader"></div> 
@@ -30,6 +34,7 @@
                 <textarea class="textArticle"></textarea>
             </div>
         </div>
+        
     </div>
     <script src = "./popup.js"></script>
 </body>

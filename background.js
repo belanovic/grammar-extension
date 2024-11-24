@@ -12,18 +12,14 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
       } else if (result.textArticle) {
         arrangeArticle(result.textArticle, request.tabId);
       }
-        
     })
-  }
+  } 
 })
 
-
-
-
-
-
-
+chrome.storage.local.set({requestArticlePending: false});
+  
 async function arrangeArticle(textArticle, x) {
+  chrome.storage.local.set({requestArticlePending: true});
   async function sendText() {
       
       try {
@@ -53,10 +49,12 @@ async function arrangeArticle(textArticle, x) {
   
   if((!answer) || (answer == []) || (answer == '')) {
       alert('ChatGPT није средио текст');
+      chrome.storage.local.set({requestArticlePending: false});
+      chrome.runtime.sendMessage({ type: 'textArranged'});
       return
   }
   chrome.storage.local.set({textArticle: answer});
-  console.log(answer)
   chrome.runtime.sendMessage({ type: 'textArranged'});
+  chrome.storage.local.set({requestArticlePending: false});
   return answer;
 }

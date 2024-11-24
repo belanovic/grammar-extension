@@ -42,7 +42,16 @@ document.addEventListener("DOMContentLoaded", function() {
 
     chrome.storage.local.get('textArticle', (result) => textArticle.value = result.textArticle);
     
-    /* setOverlay(textOverlay, 'show'); */
+ /*    setOverlay(textOverlay, 'show'); */
+
+    chrome.storage.local.get('requestArticlePending', (result) => {
+        if(result.requestArticlePending == true) {
+            setOverlay(textOverlay, 'show')
+        }
+        if(result.requestArticlePending == false) {
+            setOverlay(textOverlay, 'hide')
+        }
+    });
 
     const btnArticleStrip = document.getElementsByClassName('btnArticleStrip')[0];
 
@@ -58,14 +67,17 @@ document.addEventListener("DOMContentLoaded", function() {
     textArticle.addEventListener('input', (e) => {
         chrome.storage.local.set({textArticle: e.target.value});
     })
-
     
     btnSpelling.addEventListener('click', function() {
+        
+        setOverlay(textOverlay, 'show');
         chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
             chrome.runtime.sendMessage({ action: "checkSpelling", tabId: tabs[0].id });
         });
     })
     btnFacts.addEventListener('click', function() {
+        
+        setOverlay(textOverlay, 'show');
         chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
             chrome.runtime.sendMessage({ action: "checkFacts", tabId: tabs[0].id });
         });
