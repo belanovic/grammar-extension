@@ -37,6 +37,8 @@ document.addEventListener("DOMContentLoaded", function() {
     const btnSpelling = document.getElementsByClassName('spelling')[0];
     const btnFacts = document.getElementsByClassName('facts')[0];
     const btnArticleSend = document.getElementsByClassName('btnArticleSend')[0];
+    const btnArticleStrip = document.getElementsByClassName('btnArticleStrip')[0];
+    const btnArticleCopy = document.getElementsByClassName('btnArticleCopy')[0];
     const textArticle = document.getElementsByClassName('textArticle')[0];
     const textOverlay = document.getElementsByClassName('textOverlay')[0];
 
@@ -53,7 +55,7 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 
-    const btnArticleStrip = document.getElementsByClassName('btnArticleStrip')[0];
+    
 
     btnArticleStrip.addEventListener('click', () => {
         textArticle.value = removeLargeHexadecimalParts(textArticle.value);
@@ -63,6 +65,9 @@ document.addEventListener("DOMContentLoaded", function() {
             strippedText = strippedText.replace(/(a)\1+/g, '\n\n'); 
             return strippedText
         }
+    })
+    btnArticleCopy.addEventListener('click', () => {
+        navigator.clipboard.writeText(textArticle.value);
     })
     textArticle.addEventListener('input', (e) => {
         chrome.storage.local.set({textArticle: e.target.value});
