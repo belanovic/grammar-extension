@@ -52,7 +52,7 @@ body {
 }
 .btnContainer {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
 }
 .textContainer {
     position: relative;
