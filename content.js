@@ -96,7 +96,7 @@ async function checkFacts() {
         
         
         try {
-            const response = await fetch('http://localhost:3000/chatGPT/facts'/*  'https://grammar-backend.onrender.com/chatGPT/facts' */, {
+            const response = await fetch(/* 'http://localhost:3000/chatGPT/facts' */ 'https://grammar-backend.onrender.com/chatGPT/facts', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -183,7 +183,7 @@ async function checkComments() {
         
         
         try {
-            const response = await fetch('http://localhost:3000/chatGPT/comments'/*  'https://grammar-backend.onrender.com/chatGPT/facts' */, {
+            const response = await fetch(/* 'http://localhost:3000/chatGPT/comments' */ 'https://grammar-backend.onrender.com/chatGPT/facts', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -215,7 +215,6 @@ async function checkComments() {
         .answer {
             display: inline;
             position: relative;
-
         }
         .highlight {
             background-color: yellow;
