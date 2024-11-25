@@ -9,33 +9,51 @@ document.addEventListener("DOMContentLoaded", function() {
         tab[0].classList.add('active');
         tab[1].classList.remove('active');
         tab[2].classList.remove('active');
+        tab[3].classList.remove('active');
 
         operation[0].classList.add('active');
         operation[1].classList.remove('active');
         operation[2].classList.remove('active');
+        operation[3].classList.remove('active');
     })
     tab[1].addEventListener('click', () => {
         tab[0].classList.remove('active');
         tab[1].classList.add('active');
         tab[2].classList.remove('active');
+        tab[3].classList.remove('active');
 
         operation[0].classList.remove('active');
         operation[1].classList.add('active');
         operation[2].classList.remove('active');
+        operation[3].classList.remove('active');
     })
     tab[2].addEventListener('click', () => {
         tab[0].classList.remove('active');
         tab[1].classList.remove('active');
         tab[2].classList.add('active');
+        tab[3].classList.remove('active');
 
         operation[0].classList.remove('active');
         operation[1].classList.remove('active');
         operation[2].classList.add('active');
+        operation[3].classList.remove('active');
+    })
+    tab[3].addEventListener('click', () => {
+        tab[0].classList.remove('active');
+        tab[1].classList.remove('active');
+        tab[2].classList.remove('active');
+        tab[3].classList.add('active');
+
+        operation[0].classList.remove('active');
+        operation[1].classList.remove('active');
+        operation[2].classList.remove('active');
+        operation[3].classList.add('active');
     })
 
 
     const btnSpelling = document.getElementsByClassName('spelling')[0];
     const btnFacts = document.getElementsByClassName('facts')[0];
+    const btnComments = document.getElementsByClassName('btnComments')[0];
     const btnArticleSend = document.getElementsByClassName('btnArticleSend')[0];
     const btnArticleStrip = document.getElementsByClassName('btnArticleStrip')[0];
     const btnArticleCopy = document.getElementsByClassName('btnArticleCopy')[0];
@@ -75,16 +93,20 @@ document.addEventListener("DOMContentLoaded", function() {
     
     btnSpelling.addEventListener('click', function() {
         
-        setOverlay(textOverlay, 'show');
         chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
             chrome.runtime.sendMessage({ action: "checkSpelling", tabId: tabs[0].id });
         });
     })
     btnFacts.addEventListener('click', function() {
         
-        setOverlay(textOverlay, 'show');
         chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
             chrome.runtime.sendMessage({ action: "checkFacts", tabId: tabs[0].id });
+        });
+    })
+    btnComments.addEventListener('click', function() {
+        
+        chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+            chrome.runtime.sendMessage({ action: "checkComments", tabId: tabs[0].id });
         });
     })
     btnArticleSend.addEventListener('click', function() {

@@ -6,6 +6,9 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.action === "checkFacts") {
         checkFacts();
     }
+    if (request.action === "checkComments") {
+        checkComments();
+    }
    
   });
 
@@ -116,6 +119,93 @@ async function checkFacts() {
         const bodyText = document.body.innerHTML;
         const regex = new RegExp(`(${obj.phrase})`, "gi"); // Case-insensitive search for keyword
         const highlightedText = bodyText.replace(regex, `<span class = "answer"><span class="highlight">$1</span><span class = "correction" style = "min-width: ${correction.split(' ').length > 1? '250px' : ''};}">${correction}</span></span>`);
+    
+        document.body.innerHTML = highlightedText;
+    
+        // Apply CSS style to the highlight class
+        const style = document.createElement("style");
+        style.innerHTML = `
+        .answer {
+            display: inline;
+            position: relative;
+
+        }
+        .highlight {
+            background-color: yellow;
+            color: black;
+            font-weight: bold;
+        }
+        .correction {
+            display: none;
+            background-color: rgb(101, 255, 59);
+            color: black;
+            position: absolute;
+            
+            padding: 5px 10px 5px 10px;
+            z-index: 1;
+            font-size: 1rem;
+            border-radius: 0% 10% 0% 10%;
+            
+        }
+        .answer:hover .correction {
+            display: inline;
+        }
+        .correction:active .correction {
+            display: inline;
+    
+        }
+        `;
+        document.head.appendChild(style);
+    }
+    
+
+    let answer = await sendText();
+
+    answer = JSON.parse(answer);
+    
+    
+    if((!answer) || (answer == []) || (answer == '')) {
+        alert('ChatGPT није пронашао стилске грешке');
+        return
+    };
+    alert('ChatGPT је препоручује следеће исправке:');
+    
+    answer.forEach((elem, i) => {
+        highlightTextByKeyword(elem)
+    });
+
+}
+
+
+async function checkComments() {
+    if(!window.confirm(`Да ли желите да пошаљете коментаре ChatGPT-ju?`)) return;
+    async function sendText() {
+        
+        
+        try {
+            const response = await fetch('http://localhost:3000/chatGPT/comments'/*  'https://grammar-backend.onrender.com/chatGPT/facts' */, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                  },
+                body: JSON.stringify({
+                    text: document.getElementsByClassName('tbody')[0].innerText,
+                    prompt: "Детаљно прегледај коментаре читалаца на новинске чланке на српском, на сајту Радио-телевизије Србије. Пронађи речи, делове реченица или реченице које су увредљиве. Направи json објекат за сваку реч или реченицу коју пронађеш и стави објекте у низ []. Први property json објекта треба да се зове 'phrase' и да за вредност има речи или реченицу, под наводницима, које су увредљиве. Други property треба да се зове 'explanation' и да за вредност има објашњење, под наводницима, зашто су пронађене речи увредљиве. Дакле, овако треба да изгледа json објекат: {phrase: 'овде иде реч или реченица који су увредљиви', explanation: 'овде иде објашњење'}. Одговори само низом [] у којем су json објекти. Ако нема пронађених речи или реченица које су увредљиве, врати само празан низ []. Ево коментара:  ",
+                    description: 'Ви сте асистент за проверу коментара читалаца сајта Радио-телевизије Србије. Пажљиво анализирајте дате коментаре и пронађите увредљиве речи, фразе или реченице'
+                })
+            });
+            const responseBody = await response.json();
+            return responseBody
+        } catch (error) {
+            alert(error.message);
+            return
+        }
+    }
+    function highlightTextByKeyword(obj) {
+        const explanation = obj.explanation;
+        const bodyText = document.body.innerHTML;
+        const regex = new RegExp(`(${obj.phrase})`, "gi"); // Case-insensitive search for keyword
+        const highlightedText = bodyText.replace(regex, `<span class = "answer"><span class="highlight">$1</span><span class = "correction" style = "min-width: ${explanation.split(' ').length > 1? '250px' : ''};}">${explanation}</span></span>`);
     
         document.body.innerHTML = highlightedText;
     

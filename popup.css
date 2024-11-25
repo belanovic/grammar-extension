@@ -38,11 +38,11 @@ body {
 }
 /* spelling */
 
-.spelling, .facts {
+.spelling, .facts, .comments {
   justify-content: center;
   align-items: center;
 }
-.btnSpelling, .btnFacts {
+.btnSpelling, .btnFacts, .btnComments {
   flex: 0 0 50%;
   height: 50px;
 }

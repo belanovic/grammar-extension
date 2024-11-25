@@ -5,6 +5,9 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === "checkFacts" && request.tabId) {
     chrome.tabs.sendMessage(request.tabId, { action: "checkFacts" });
   }
+  if (request.action === "checkComments" && request.tabId) {
+    chrome.tabs.sendMessage(request.tabId, { action: "checkComments" });
+  }
   if (request.action === "arrangeArticle" && request.tabId) {
      chrome.storage.local.get('textArticle', (result) => {
       if(chrome.runtime.lastError) {
