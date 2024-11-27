@@ -1,5 +1,5 @@
 body {
-    width: 750px;
+    width: 780px;
 }
 .container {
   padding: 0 10px 20px 10px;
@@ -35,6 +35,9 @@ body {
 }
 .operation.active {
     display: flex;
+}
+button:hover {
+  cursor: pointer;
 }
 /* spelling */
 
