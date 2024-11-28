@@ -1,8 +1,10 @@
-
+ 
 
 document.addEventListener("DOMContentLoaded", function() {
+   
 
     const tab = document.getElementsByClassName('tab');
+    
     const operation = document.getElementsByClassName('operation');
 
     tab[0].addEventListener('click', () => {

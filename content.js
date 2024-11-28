@@ -14,6 +14,10 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
 
 async function checkSpelling() {
+    if(!document.getElementsByClassName('rts')[0]) {
+        alert(`Нисте на сајту Радио-телевизије Србије`)
+        return
+    }; 
     if(!window.confirm(`Да ли желите да пошаљете текст ChatGPT-ju?`)) return;
     async function sendText() {
         
@@ -39,43 +43,26 @@ async function checkSpelling() {
     }
 
     function highlightTextByKeyword(keyword) {
-        const correction = 'ovo je neka korekcikja ij tako dalje i i neki savet';
         const bodyText = document.body.innerHTML;
         const regex = new RegExp(`(${keyword})`, "gi"); // Case-insensitive search for keyword
-        const highlightedText = bodyText.replace(regex, `<span class = "answer"><span class="highlight">$1</span><span class = "correction">${correction}</span></span>`);
+        const highlightedText = bodyText.replace(regex, `<span class="highlight">$1</span>`);
     
         document.body.innerHTML = highlightedText;
     
         // Apply CSS style to the highlight class
         const style = document.createElement("style");
         style.innerHTML = `
-        .answer {
-            display: inline;
-            position: relative;
-        }
         .highlight {
             background-color: yellow;
             color: black;
             font-weight: bold;
         }
-        .correction {
-            display: none;
-            background-color: lightgreen;
-            color: black;
-            position: absolute;
-            width: 200px;
-        }
-        .answer:hover .correction {
-            display: inline;
-        }
         `;
         document.head.appendChild(style);
     }
     
-
     let answer = await sendText();
     answer = JSON.parse(answer);
-    
     
     if((!answer) || (answer == []) || (answer == '')) {
         alert('ChatGPT није пронашао грешке');
@@ -91,6 +78,10 @@ async function checkSpelling() {
 
 
 async function checkFacts() {
+    if(!document.getElementsByClassName('rts')[0]) {
+        alert(`Нисте на сајту Радио-телевизије Србије`)
+        return
+    }; 
     if(!window.confirm(`Да ли желите да пошаљете текст ChatGPT-ju?`)) return;
     async function sendText() {
         
@@ -102,7 +93,7 @@ async function checkFacts() {
                     'Content-Type': 'application/json'
                   },
                 body: JSON.stringify({
-                    text: document.getElementById('content').innerText,
+                    text: element.innerText,
                     prompt: "Детаљно прегледај новински чланак на српском. Пронађи речи, делове реченица или реченице које би могле да буду формулисане стилски, логички или граматички исправније. Направи json објекат за сваку реч или реченицу коју пронађеш и стави објекте у низ []. Први property json објекта треба да се зове 'phrase' и да за вредност има речи или реченицу, под наводницима, која би могла да буде формулисана другачије. Други property треба да се зове 'correction' и да има вредност предложене исправке, под наводницима. Дакле, овако треба да изгледа json објекат: {phrase: 'овде иде реч или реченица која би могла да се формулише другачије', correction: 'овде иде предложена корекција'}. Одговори само низом [] у којем су json објекти. Ако нема пронађених речи или реченица које би могле да буду формулисане другачије, врати само празан низ []. Ево чланка:  ",
                     description: 'Ви сте асистент за проверу језичког стила са знањем српског језика. Пажљиво анализирајте дати новински чланак у стилу сајта Радио-телевизије Србије'
                 })
@@ -178,6 +169,10 @@ async function checkFacts() {
 
 
 async function checkComments() {
+    if(!document.getElementsByClassName('coomentsTable')[0]) {
+        alert(`Нисте у коментарима`)
+        return
+    }; 
     if(!window.confirm(`Да ли желите да пошаљете коментаре ChatGPT-ju?`)) return;
     async function sendText() {
         
