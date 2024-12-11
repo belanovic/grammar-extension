@@ -9,11 +9,19 @@
 </head>
 <body>
     <div class = "container">
+        <!-- <div class="appOverlay">
+            <div class="keyInput">
+                <label>Унеси <strong>secret api key</strong> са <strong>openai.com</strong></label>
+                <input type="text" class="inputKeyInput">
+                <button class="btnKeyInput">Сачувај</button>
+            </div>
+        </div> -->
         <div class="navigation">
             <div class="tab tabSpelling active"><div class="tabText">Словне грешке</div></div>
             <div class="tab tabFacts"><div class="tabText">Стилске исправке</div></div>
             <div class="tab tabArticle"><div class="tabText">Коментари</div></div>
             <div class="tab tabArticle"><div class="tabText">Среди прилог</div></div>
+            <div class="tab tabArticle settings"><div class="tabText"><i class="fa-solid fa-sliders"></div></div>
         </div>
         <div class="operation spelling active">
             <button class = "btn btnSpelling">Пронађи словне грешке</button>
@@ -38,7 +46,14 @@
                 <button class = "btn btnArticleCopy">Копирај текст</button>
             </div>
         </div>
-        <div class="reset"><div class="resetBtn"></div></div>
+        <div class="operation settings">
+            <div class="keyInput">
+                <label>Унеси <strong>secret api key</strong> са <strong>openai.com</strong></label>
+                <input type="text" class="inputKeyInput">
+                <button class="btnKeyInput">Сачувај</button>
+            </div>
+            <div class="resetBtn"></div> 
+        </div>
     </div>
     <script src = "./popup.js"></script>
 </body>

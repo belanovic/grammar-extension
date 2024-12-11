@@ -13,7 +13,7 @@ body {
 }
 
 .tab {
-    flex: 0 0 24%;
+    flex: 1 1 20%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -31,6 +31,13 @@ body {
     cursor: pointer;
     border: 4px solid rgb(219, 102, 0);
     box-sizing: border-box;
+}
+
+.tab.settings {
+  flex: 0 0 20%;
+}
+.tab i {
+  color: white
 }
 
 .operation {
@@ -60,8 +67,12 @@ button:hover {
 .btnSpelling:hover, .btnFacts:hover, .btnComments:hover {
   background-color: rgb(219, 102, 0);
   color: white;
-
 }
+.btnSpelling:active, .btnFacts:active, .btnComments:active {
+  transform: scale(0.95, 0.95);
+  transition: transform 0.1s;
+}
+
 /* article */
 
 .article {
@@ -76,10 +87,14 @@ button:hover {
   flex: 0 0 25%;
   font-size: 1rem;
   padding: 5px 0 5px 0;
+  transition: transform 0.1s;
 }
 .article .btn:hover {
   background-color: rgb(219, 102, 0);
   color: white;
+}
+.article .btn:active {
+  transform: scale(0.95, 0.95);
 }
 .textContainer {
     position: relative;
@@ -111,6 +126,14 @@ button:hover {
     right: 0;
 }
 
+/* .operation.settings */
+
+.operation.settings {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
 .resetBtn {
   width: 30px;
   height: 30px;
@@ -118,6 +141,60 @@ button:hover {
   margin-left: auto;
   background-color: red;
 }
+
+
+.keyInput {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.keyInput label {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  color: white;
+}
+
+.keyInput input {
+  width: 90%;
+  font-size: 1rem;
+  margin-right: 20px;
+  margin-bottom: 20px;
+}
+
+.keyInput button {
+  width: 150px;
+  padding-top: 5px;
+  padding-bottom: 10px;
+  background-color: rgb(219, 102, 0);
+  color: white;
+  transition: transform 0.05s;
+}
+
+.keyInput button:hover {
+  transform: scale(1.05);
+  
+}
+.keyInput button:active {
+  transform: scale(0.99, 0.99);
+}
+
+/* appOverlay */
+
+.appOverlay {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgb(63, 63, 63);
+}
+
 
 /* HTML: <div class="loader"></div> */
 .loader {
@@ -148,3 +225,4 @@ button:hover {
   .answer {
     font-size: 2.23rem;
   }
+
