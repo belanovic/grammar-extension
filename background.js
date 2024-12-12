@@ -10,8 +10,6 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     chrome.tabs.sendMessage(request.tabId, { action: "checkComments" });
   }
 
-
-
   if (request.action === "keySet" && request.tabId) {
     chrome.storage.local.get('API_KEY', (result) =>  API_KEY = result.API_KEY);
   }

@@ -83,7 +83,6 @@ document.addEventListener("DOMContentLoaded", function() {
     const btnArticleCopy = document.getElementsByClassName('btnArticleCopy')[0];
     const textArticle = document.getElementsByClassName('textArticle')[0];
     const textOverlay = document.getElementsByClassName('textOverlay')[0];
-    const appOverlay = document.getElementsByClassName('appOverlay')[0];
     const keyInput = document.getElementsByClassName('keyInput')[0];
     const inputKeyInput = document.getElementsByClassName('inputKeyInput')[0];
     const btnKeyInput = document.getElementsByClassName('btnKeyInput')[0];
@@ -93,7 +92,6 @@ document.addEventListener("DOMContentLoaded", function() {
         chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
             chrome.runtime.sendMessage({ action: "keySet", tabId: tabs[0].id });
         });
-        appOverlay.style.display = 'none';
         chrome.storage.local.get('API_KEY', (result) => alert(result.API_KEY));
     })
 
