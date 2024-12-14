@@ -86,7 +86,12 @@ document.addEventListener("DOMContentLoaded", function() {
     const keyInput = document.getElementsByClassName('keyInput')[0];
     const inputKeyInput = document.getElementsByClassName('inputKeyInput')[0];
     const btnKeyInput = document.getElementsByClassName('btnKeyInput')[0];
+    const resetBtn = document.getElementsByClassName('resetBtn')[0];
 
+    resetBtn.addEventListener('click', () => {
+        if(!window.confirm(`Да ли желите да изађете из ектензије`)) return;
+        chrome.runtime.reload();
+    })
     btnKeyInput.addEventListener('click', () => {
         chrome.storage.local.set({API_KEY: inputKeyInput.value});
         chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
