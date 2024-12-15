@@ -75,8 +75,8 @@ document.addEventListener("DOMContentLoaded", function() {
     })
 
 
-    const btnSpelling = document.getElementsByClassName('spelling')[0];
-    const btnFacts = document.getElementsByClassName('facts')[0];
+    const btnSpelling = document.getElementsByClassName('btnSpelling')[0];
+    const btnFacts = document.getElementsByClassName('btnFacts')[0];
     const btnComments = document.getElementsByClassName('btnComments')[0];
     const btnArticleSend = document.getElementsByClassName('btnArticleSend')[0];
     const btnArticleStrip = document.getElementsByClassName('btnArticleStrip')[0];
@@ -90,6 +90,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     resetBtn.addEventListener('click', () => {
         if(!window.confirm(`Да ли желите да изађете из ектензије`)) return;
+        chrome.storage.local.set({requestArticlePending: false});
         chrome.runtime.reload();
     })
     btnKeyInput.addEventListener('click', () => {
