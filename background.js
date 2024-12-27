@@ -1,4 +1,3 @@
-let API_KEY;
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === "checkSpelling" && request.tabId) {
     chrome.tabs.sendMessage(request.tabId, { action: "checkSpelling" });
@@ -19,7 +18,10 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
       if(chrome.runtime.lastError) {
         console.error('Error retrieving data:', chrome.runtime.lastError.message);
       } else if (result.textArticle) {
-        arrangeArticle(result.textArticle);
+        let text = result.textArticle;
+        chrome.storage.local.get('API_KEY', (result) => {
+          arrangeArticle(text, result.API_KEY);
+        })
       }
     })
   } 
@@ -27,13 +29,13 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
 chrome.storage.local.set({requestArticlePending: false});
   
-async function arrangeArticle(textArticle) {
+async function arrangeArticle(textArticle, API_KEY) {
   chrome.storage.local.set({requestArticlePending: true});
   const text = textArticle;
   const prompt = "Среди овај новински текст на српском, у стилу чланака на сајту Радио-телевизије Србије. Немој да уклониш регуларан текст, само исправи шта је потребно. Уклони сувишне размаке између речи, направи пасусе, исправи словне грешке, али немој да изоставиш ниједан део регуларног текста. Имена и презимена треба само да почињу великим словом. Текст треба да буде на ћирилици. Измисли пет занимљивих наслова на основу текста. Ево текста: ";
   const description = 'Ви сте асистент за сређивање новинских текстова на српском језику за сајт Радио-телевизије Србије';
 
-  let answer = await callChatGPT(text, prompt, description);
+  let answer = await callChatGPT(text, prompt, description, API_KEY);
 
   try {
     if((!answer) || (answer == '')) {
@@ -60,7 +62,7 @@ async function arrangeArticle(textArticle) {
   chrome.storage.local.get('API_KEY', (result) =>  API_KEY = result.API_KEY); */
 
   
-  async function callChatGPT(text, prompt, description) {
+  async function callChatGPT(text, prompt, description, API_KEY) {
       try {
         const response = await fetch('https://api.openai.com/v1/chat/completions', {
           method: 'POST',
